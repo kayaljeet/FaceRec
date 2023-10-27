@@ -1,5 +1,5 @@
 #!/bin/bash
-code_path="/root/FaceRecVer.2/Server"
+code_path="/root/FaceRec/Server"
 cmd="cd ${code_path}"
 eval $cmd
 exec_cmd="python3 app.py"
