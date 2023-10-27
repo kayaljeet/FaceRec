@@ -1,23 +1,27 @@
 from flask import Flask, render_template, request
 import json
 from datetime import datetime
+import os  
 
 app = Flask(__name__)
 
 def get_sorted_entries():
     entries = []
 
-    with open('log.json', 'r') as file:
-        for line in file:
-            try:
-                entry = json.loads(line)
-                entries.append(entry)
-            except json.JSONDecodeError:
-                pass  # Ignore invalid lines
+    # Check if 'log.json' file exists
+    if os.path.exists('log.json'):
+        with open('log.json', 'r') as file:
+            for line in file:
+                try:
+                    entry = json.loads(line)
+                    entries.append(entry)
+                except json.JSONDecodeError:
+                    pass  # Ignore invalid lines
 
-    sorted_entries = sorted(entries, key=lambda x: datetime.strptime(x['Time'], '%Y-%m-%d %H:%M:%S'))
-    return sorted_entries
-
+        sorted_entries = sorted(entries, key=lambda x: datetime.strptime(x['Time'], '%Y-%m-%d %H:%M:%S'))
+        return sorted_entries
+    else:
+        return []
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -39,6 +43,6 @@ def index():
 
     return render_template('index.html', entries=entries)
 
-
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(port=8080, debug=True)
+
