@@ -2,7 +2,7 @@
 Description=Custom Startup Script
 
 [Service]
-ExecStart=/root/FaceRecVer.2/Server/exec_app.sh
+ExecStart=/root/FaceRec/Server/exec_app.sh
 
 [Install]
 WantedBy=default.target
