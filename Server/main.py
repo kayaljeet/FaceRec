@@ -159,6 +159,8 @@ def client_handler(connection):
         except Exception as e:
             print(f"Client {camera_name} disconnected - exception {e}")
             cv2.destroyWindow(camera_name)
+            for i in range(4):
+                cv2.waitKey(1)
             break
 
     connection.close()
@@ -169,9 +171,9 @@ def accept_connections(ServerSocket):
         Client, address = ServerSocket.accept()
         print('Connected to: ' + address[0] + ':' + str(address[1]))
         #start_new_thread(client_handler, (Client, )) #for handling multiple clients
-        thread = threading.Thread(target=client_handler(Client))
-        print('Total Clients', threading.active_count()-1)
-        #client_handler(Client)
+        #thread = threading.Thread(target=client_handler(Client))
+        #print('Total Clients', threading.active_count()-1)
+        client_handler(Client)
 
 
 def start_server(host, port):
